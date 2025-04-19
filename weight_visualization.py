@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import pickle
 
 # model = nn.models.Model_MLP()
-model = nn.models.Model_CNN()
-model.load_model(r'.\saved_models\model_3lyr\best_model.pickle')
+model = nn.models.Model_CNN_v2_1()
+model.load_model(r'.\saved_models\model_noise\best_model.pickle')
 
 test_images_path = r'.\dataset\MNIST\t10k-images-idx3-ubyte.gz'
 test_labels_path = r'.\dataset\MNIST\t10k-labels-idx1-ubyte.gz'
@@ -39,6 +39,14 @@ mats.append(model.layers[0].params['W'][:,:,:,:])
 #         axes[i].set_yticks([])
 
 # plt.figure()
-plt.imshow(mats[0][0,0,:,:], cmap='coolwarm')
-plt.colorbar()
+plt.figure(figsize=(8, 8))
+
+
+for i in range(4):
+        plt.subplot(2,2,i+1)
+        im = plt.imshow(mats[0][i,0,:,:], cmap='coolwarm', vmin=-1, vmax=1)
+        plt.axis('off')
+        plt.title(f'Layer 1, Filter {i+1}')
+
+plt.colorbar(im, ax=plt.gcf().get_axes(), orientation='vertical', fraction=0.046, pad=0.04)
 plt.show()

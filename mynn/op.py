@@ -228,6 +228,7 @@ class MultiCrossEntropyLoss(Layer):
         labels : [batch_size, ]
         This function generates the loss.
         """
+
         self.input = predicts
         self.labels = labels
         if self.has_softmax:

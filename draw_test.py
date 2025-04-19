@@ -221,7 +221,7 @@ if __name__ == '__main__':
     import mynn as nn
     # 导入模型
     model = nn.models.Model_CNN_v2_1()
-    model.load_model(r'.\saved_models\model_v2_1_1\best_model.pickle')
+    model.load_model(r'.\saved_models\model_noise\best_model.pickle')
 
 
     # 创建窗口

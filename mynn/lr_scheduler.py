@@ -32,10 +32,8 @@ class MultiStepLR(scheduler):
 
     def step(self):
         self.step_count += 1
-
-        if self.step_count >= self.milestones[0]:
+        if self.step_count in self.milestones:
             self.optimizer.init_lr *= self.gamma
-            del self.milestones[0]
 
 
 class ExponentialLR(scheduler):

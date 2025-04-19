@@ -8,7 +8,6 @@ import pickle
 # model = nn.models.Model_MLP()
 model = nn.models.Model_CNN_v2_1()
 model.load_model(r'.\saved_models\model_v2_1_1\best_model.pickle')
-
 test_images_path = r'.\dataset\MNIST\t10k-images-idx3-ubyte.gz'
 test_labels_path = r'.\dataset\MNIST\t10k-labels-idx1-ubyte.gz'
 

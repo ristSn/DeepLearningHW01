@@ -80,10 +80,10 @@ for _ in range(resample_num):
     train_labs = np.concatenate((train_labs, np.array([label])))
 
 # 保存一下
-np.save(r'./dataset/affine_imgs/train_imgs.npy', train_imgs)
-np.save(r'./dataset/affine_imgs/train_labs.npy', train_labs)
-np.save(r'./dataset/affine_imgs/valid_imgs.npy', valid_imgs)
-np.save(r'./dataset/affine_imgs/valid_labs.npy', valid_labs)
+# np.save(r'./dataset/affine_imgs/train_imgs.npy', train_imgs)
+# np.save(r'./dataset/affine_imgs/train_labs.npy', train_labs)
+# np.save(r'./dataset/affine_imgs/valid_imgs.npy', valid_imgs)
+# np.save(r'./dataset/affine_imgs/valid_labs.npy', valid_labs)
 
 
 # train_imgs = np.load(r'./dataset/affine_imgs/train_imgs.npy')
@@ -120,17 +120,16 @@ plt.show()
 #
 # runner.train([train_imgs, train_labs], [valid_imgs, valid_labs], num_epochs=5, log_iters=100, save_dir=r'./best_models')
 
-model = nn.models.Model_CNN(size_list=[(28, 28), (16, 16), (8, 8), (10, 1)],
-                            lambda_list=[1e-4, 1e-4, 1e-4, 1e-4, 1e-4, 1e-4, 1e-4],
-                            ks_list=[5, 5, 3, 3, 3])
-optimizer = nn.optimizer.MomentGD(init_lr=0.01, model=model, mu=0.9)
-scheduler = nn.lr_scheduler.StepLR(optimizer=optimizer, step_size=600, gamma=0.75)
-loss_fn = nn.op.MultiCrossEntropyLoss(model=model, max_classes=train_labs.max() + 1)
+model = nn.models.Model_CNN_v2_1()
+
+optimizer = nn.optimizer.MomentGD(init_lr=1e-2, model=model, mu=0.9)
+scheduler = nn.lr_scheduler.StepLR(optimizer=optimizer, step_size=1000, gamma=0.5)
+loss_fn = nn.op.MultiCrossEntropyLoss(model=model, max_classes=train_labs.max()+1)
 
 runner = nn.runner.RunnerM(model, optimizer, nn.metric.accuracy, loss_fn, scheduler=scheduler)
 print("start training...")
 runner.train([train_imgs, train_labs], [valid_imgs, valid_labs],
-             num_epochs=8, log_iters=100, save_dir=r'./saved_models/model_affine')
+             num_epochs=5, log_iters=100, save_dir=r'./saved_models/model_affine_v2_2')
 print("training done.")
 
 _, axes = plt.subplots(1, 2)

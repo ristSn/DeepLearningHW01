@@ -306,4 +306,3 @@ class Model_CNN_v2_1(Layer):
         self.layers[3].params['b'] = conv2_b
         self.layers[7].params['W'] = fc1_W
         self.layers[7].params['b'] = fc1_b
-

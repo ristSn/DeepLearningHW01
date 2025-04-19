@@ -43,13 +43,14 @@ train_imgs = train_imgs / train_imgs.max()
 valid_imgs = valid_imgs / valid_imgs.max()
 
 # linear_model = nn.models.Model_MLP([train_imgs.shape[-1], 600, 10], 'ReLU', [1e-4, 1e-4])
-# optimizer = nn.optimizer.SGD(init_lr=0.06, model=linear_model)
+# # optimizer = nn.optimizer.SGD(init_lr=0.06, model=linear_model)
+# optimizer = nn.optimizer.MomentGD(init_lr=0.06, model=linear_model, mu=0.5)
 # scheduler = nn.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=[800, 2400, 4000], gamma=0.5)
 # loss_fn = nn.op.MultiCrossEntropyLoss(model=linear_model, max_classes=train_labs.max()+1)
 #
 # runner = nn.runner.RunnerM(linear_model, optimizer, nn.metric.accuracy, loss_fn, scheduler=scheduler)
 #
-# runner.train([train_imgs, train_labs], [valid_imgs, valid_labs], num_epochs=5, log_iters=100, save_dir=r'./best_models')
+# runner.train([train_imgs, train_labs], [valid_imgs, valid_labs], num_epochs=5, log_iters=100, save_dir=r'./saved_models/model_momentGD5')
 
 # model = nn.models.Model_CNN(size_list=[(28, 28), (22, 22), (18, 18), (12, 12), (8, 8), (10, 1)],
 #                             lambda_list=None,

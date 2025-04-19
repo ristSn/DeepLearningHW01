@@ -59,16 +59,14 @@ train_imgs[train_imgs < 0] = 0
 #
 # runner.train([train_imgs, train_labs], [valid_imgs, valid_labs], num_epochs=5, log_iters=100, save_dir=r'./best_models')
 
-model = nn.models.Model_CNN([(28, 28), (16, 16), (8, 8), (10, 1)], [1e-4, 1e-4, 1e-4, 1e-4, 1e-4])
-optimizer = nn.optimizer.MomentGD(init_lr=0.06, model=model, mu=0.9)
-scheduler = nn.lr_scheduler.MultiStepLR(optimizer=optimizer,
-                                        milestones=[300, 600, 1200, 3000, 6000, 12000, 30000],
-                                        gamma=0.75)
+model = nn.models.Model_CNN_v2_1()
+optimizer = nn.optimizer.MomentGD(init_lr=1e-2, model=model, mu=0.9)
+scheduler = nn.lr_scheduler.StepLR(optimizer=optimizer, step_size=1000, gamma=0.5)
 loss_fn = nn.op.MultiCrossEntropyLoss(model=model, max_classes=train_labs.max() + 1)
 
 runner = nn.runner.RunnerM(model, optimizer, nn.metric.accuracy, loss_fn, scheduler=scheduler)
 print("start training...")
-runner.train([train_imgs, train_labs], [valid_imgs, valid_labs], num_epochs=1, log_iters=100,
+runner.train([train_imgs, train_labs], [valid_imgs, valid_labs], num_epochs=5, log_iters=100,
              save_dir=r'./saved_models/model_noise')
 print("training done.")
 
